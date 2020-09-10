@@ -34,10 +34,6 @@ class App extends React.Component{
       </Switch>
     )
   }
-    // <div>
-    //   <Palette palette={generatePalette(seedColors[4])}/>
-    // </div>
-  // );
 }
 
 export default App;
