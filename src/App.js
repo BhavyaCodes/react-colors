@@ -10,11 +10,13 @@ import NewPaletteForm from './NewPaletteForm'
 class App extends React.Component{
   constructor(props){
     super(props)
-    this.state = {palettes: seedColors}
+    const savedPalettes  = JSON.parse(window.localStorage.getItem("palettes"))
+    this.state = {palettes: savedPalettes || seedColors}
+    this.syncLocalStorage = this.syncLocalStorage.bind(this)
   }
 
   savePalette = (newPalette) =>{
-    this.setState({palettes: [...this.state.palettes, newPalette]})
+    this.setState({palettes: [...this.state.palettes, newPalette]}, this.syncLocalStorage)
   }
 
   findPalette = (id) => {
@@ -23,6 +25,13 @@ class App extends React.Component{
     })
   }
 
+  syncLocalStorage(){
+    //save palettes to local storage
+    window.localStorage.setItem(
+      'palettes',
+      JSON.stringify(this.state.palettes)
+    )
+  }
   render(){
     return (
       <Switch>
