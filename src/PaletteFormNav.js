@@ -13,6 +13,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {Link} from 'react-router-dom'
 
+import PaletteMetaForm from './PaletteMetaForm'
+
 const drawerWidth = 400;
 
 const styles = theme => ({
@@ -52,14 +54,6 @@ export class PaletteFormNav extends Component {
 		}
 	}
 
-	componentDidMount(){
-		ValidatorForm.addValidationRule('isPaletteNameUnique', (value) => {
-      return this.props.palettes.every(
-        ({paletteName}) => paletteName.toLowerCase() !== value.toLowerCase()
-      )
-    });
-	}
-
 	handleChange = (evt) => {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -67,7 +61,7 @@ export class PaletteFormNav extends Component {
   }
 
 	render() {
-		const { classes, open } = this.props
+		const { classes, open, palettes, handleSubmit } = this.props
 		const { newPaletteName } = this.state
 		return (
 			<div className={classes.root}>
@@ -93,21 +87,10 @@ export class PaletteFormNav extends Component {
 						</Typography>
 					</Toolbar>
 					<div className={classes.navBtns}>
-						<ValidatorForm onSubmit={() => this.props.handleSubmit(newPaletteName)}>
-							<TextValidator 
-								value={this.state.newPaletteName}
-								label="Palette Name"
-								name="newPaletteName"
-								onChange={this.handleChange}
-								validators={['required',"isPaletteNameUnique"]}
-								errorMessages={['Enter a palette name','Name already taken']}
-							/>
-							<Button
-								variant="contained"
-								color="primary"
-								type="submit"
-							>Save Palette</Button>
-						</ValidatorForm>
+						<PaletteMetaForm
+							palettes={palettes}
+							handleSubmit={handleSubmit}
+						/>
 						<Link to="/">
 							<Button
 								variant="contained"
