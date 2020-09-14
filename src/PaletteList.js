@@ -29,6 +29,7 @@ export class PaletteList extends Component {
 		this.openDialog = this.openDialog.bind(this)
 		this.closeDialog = this.closeDialog.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
+		this.goToPalette = this.goToPalette.bind(this)
 	}
 
 	openDialog(id){
@@ -65,8 +66,7 @@ export class PaletteList extends Component {
 								>
 									<MiniPalette
 										{...palette}
-										handleClick={()=>this.goToPalette(palette.id)}
-										// handleDelete={deletePalette}
+										handleClick={this.goToPalette}
 										openDialog={this.openDialog}
 										key={palette.id}
 										id={palette.id}
